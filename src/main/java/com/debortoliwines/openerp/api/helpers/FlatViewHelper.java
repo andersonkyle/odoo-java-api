@@ -180,7 +180,6 @@ public class FlatViewHelper {
 
 		public void SortByFieldName(final boolean idFirst){
 			Collections.sort(this, new Comparator<FlatViewField>() {
-				@Override
 				public int compare(FlatViewField arg0, FlatViewField arg1) {
 					if (idFirst && arg0.getName().equals("id"))
 						return -1;
