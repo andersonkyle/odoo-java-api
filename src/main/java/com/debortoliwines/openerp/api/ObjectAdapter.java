@@ -23,6 +23,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.xmlrpc.XmlRpcException;
 
@@ -831,6 +832,25 @@ public class ObjectAdapter {
 		RowCollection rows = new RowCollection(results, fieldCol);
 
 		return rows;
+	}
+	
+	/**
+	 * Call to install a module
+	 * @param functionName
+	 * @param parameters
+	 * @return
+	 * @throws XmlRpcException
+	 * @throws OpeneERPApiException
+	 */
+	public boolean installModule(String functionName, Object[] parameters) throws XmlRpcException, OpeneERPApiException{
+		boolean isModuleInstalled = false;
+		
+		Map<String, Object> results = (HashMap<String, Object>) commands.callModuleObjectFunction(objectName, functionName, parameters);
+		
+		if(results!=null && !results.isEmpty()){
+			isModuleInstalled = true;
+		}
+		return isModuleInstalled;
 	}
 	
   /**
