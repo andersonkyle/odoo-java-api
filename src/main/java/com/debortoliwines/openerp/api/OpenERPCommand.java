@@ -20,6 +20,8 @@
 package com.debortoliwines.openerp.api;
 
 import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.xmlrpc.XmlRpcException;
 
 /**
@@ -169,6 +171,19 @@ public class OpenERPCommand {
 	 */
 	public Object[] callObjectFunction(String objectName, String functionName, Object[] parameters) throws XmlRpcException {
 		return (Object[]) session.executeCommand(objectName, functionName, parameters);
+	}
+	
+	/**
+	 * Calls function on an object to module installation
+	 * @param objectName
+	 * @param functionName
+	 * @param parameters
+	 * @return
+	 * @throws XmlRpcException
+	 */
+	@SuppressWarnings({"unchecked" })
+	public Map<String,Object> callModuleObjectFunction(String objectName, String functionName, Object[] parameters) throws XmlRpcException {
+		return (HashMap<String, Object>) session.executeCommand(objectName, functionName, parameters);
 	}
 	
 	/**
