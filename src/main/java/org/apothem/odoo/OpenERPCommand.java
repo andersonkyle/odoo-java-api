@@ -17,7 +17,7 @@
  *
  */
 
-package com.debortoliwines.openerp.api;
+package org.apothem.odoo;
 
 import java.util.HashMap;
 import org.apache.xmlrpc.XmlRpcException;

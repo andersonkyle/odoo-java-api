@@ -17,7 +17,7 @@
  *
  */
 
-package com.debortoliwines.openerp.api.helpers;
+package org.apothem.odoo.helpers;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,10 +25,9 @@ import java.util.Comparator;
 import java.util.Date;
 
 import org.apache.xmlrpc.XmlRpcException;
-
-import com.debortoliwines.openerp.api.Field;
-import com.debortoliwines.openerp.api.FieldCollection;
-import com.debortoliwines.openerp.api.Row;
+import org.apothem.odoo.Field;
+import org.apothem.odoo.FieldCollection;
+import org.apothem.odoo.Row;
 
 /**
  * Helper class to take a row object and flatten it out.

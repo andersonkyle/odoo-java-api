@@ -17,7 +17,7 @@
  *
  */
 
-package com.debortoliwines.openerp.api;
+package org.apothem.odoo;
 
 /**
  * Exception class for OpenERP API errors

@@ -17,7 +17,7 @@
  *
  */
 
-package com.debortoliwines.openerp.api;
+package org.apothem.odoo;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 
-import com.debortoliwines.openerp.api.Field.FieldType;
+import org.apothem.odoo.Field.FieldType;
 
 /***
  * Holds data returned from the OpenERP server.

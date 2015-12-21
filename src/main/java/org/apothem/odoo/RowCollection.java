@@ -17,7 +17,7 @@
  *
  */
 
-package com.debortoliwines.openerp.api;
+package org.apothem.odoo;
 
 import java.util.ArrayList;
 import java.util.HashMap;

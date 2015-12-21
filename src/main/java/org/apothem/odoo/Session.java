@@ -17,15 +17,14 @@
  *
  */
 
-package com.debortoliwines.openerp.api;
+package org.apothem.odoo;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.apache.xmlrpc.XmlRpcException;
-
-import com.debortoliwines.openerp.api.OpenERPXmlRpcProxy.RPCProtocol;
-import com.debortoliwines.openerp.api.OpenERPXmlRpcProxy.RPCServices;
+import org.apothem.odoo.OpenERPXmlRpcProxy.RPCProtocol;
+import org.apothem.odoo.OpenERPXmlRpcProxy.RPCServices;
 
 /***
  * Manages an OpenERP session by holding context and initiating all calls to the server.
