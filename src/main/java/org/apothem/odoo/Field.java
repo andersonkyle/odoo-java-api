@@ -1,20 +1,17 @@
 /*
- *   Copyright 2011, 2014 De Bortoli Wines Pty Limited (Australia)
- * 
- *   This file is part of OpenERPJavaAPI.
+ * Copyright 2015 Apothem.
  *
- *   Licensed under the Apache License, Version 2.0 (the "License");
- *   you may not use this file except in compliance with the License.
- *   You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- *       http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
- *   Unless required by applicable law or agreed to in writing, software
- *   distributed under the License is distributed on an "AS IS" BASIS,
- *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *   See the License for the specific language governing permissions and
- *   limitations under the License. 
- *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package org.apothem.odoo;
@@ -23,14 +20,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /***
- * Provides OpenERP field properties like data types, selection fields etc.
+ * Provides Odoo field properties like data types, selection fields etc.
  * @author Pieter van der Merwe
  *
  */
 public class Field {
 	
 	/**
-	 * OpenERP field types.
+	 * Odoo field types.
 	 * @author Pieter van der Merwe
 	 *
 	 */
@@ -39,10 +36,10 @@ public class Field {
 	}
 	
 	private final String name;
-	private final HashMap<String, Object> openERPFieldData;
+	private final HashMap<String, Object> odooFieldData;
 	
-	public Field(String fieldName, HashMap<String, Object> openERPFieldData){
-		this.openERPFieldData = openERPFieldData;
+	public Field(String fieldName, HashMap<String, Object> odooFieldData){
+		this.odooFieldData = odooFieldData;
 		this.name = fieldName;
 	}
 
@@ -54,8 +51,8 @@ public class Field {
 	public Object getFieldProperty(String propertyName){
 		Object value = null;
 		
-		if (openERPFieldData.containsKey(propertyName))
-			value = openERPFieldData.get(propertyName);
+		if (odooFieldData.containsKey(propertyName))
+			value = odooFieldData.get(propertyName);
 		
 		return value;
 	}
@@ -105,7 +102,7 @@ public class Field {
 	}
 
 	/**
-	 * Get the datatype of the field.  If you want the original OpenERP type, use getFieldProperty("type")
+	 * Get the datatype of the field.  If you want the original Odoo type, use getFieldProperty("type")
 	 * @return
 	 */
 	public FieldType getType() {

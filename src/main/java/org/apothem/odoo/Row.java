@@ -1,20 +1,17 @@
 /*
- *   Copyright 2011, 2014 De Bortoli Wines Pty Limited (Australia)
+ * Copyright 2015 Apothem.
  *
- *   This file is part of OpenERPJavaAPI.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- *   Licensed under the Apache License, Version 2.0 (the "License");
- *   you may not use this file except in compliance with the License.
- *   You may obtain a copy of the License at
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
- *       http://www.apache.org/licenses/LICENSE-2.0
- *
- *   Unless required by applicable law or agreed to in writing, software
- *   distributed under the License is distributed on an "AS IS" BASIS,
- *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *   See the License for the specific language governing permissions and
- *   limitations under the License. 
- *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package org.apothem.odoo;
@@ -29,29 +26,29 @@ import java.util.HashMap;
 import org.apothem.odoo.Field.FieldType;
 
 /***
- * Holds data returned from the OpenERP server.
+ * Holds data returned from the Odoo server.
  * @author Pieter van der Merwe
  *
  */
 public class Row {
 
-	private final HashMap<String, Object> openERPResult;
+	private final HashMap<String, Object> odooResult;
 	private final FieldCollection fields;
 	private final ArrayList<RowChangedListener> rowChangedListeners = new ArrayList<Row.RowChangedListener>();
 	private final FieldCollection changedFields = new FieldCollection();
 	
 	/**
 	 * Default constructor
-	 * @param openERPResult The HashMap object returned from readObject. containing all data for this row
+	 * @param odooResult The HashMap object returned from readObject. containing all data for this row
 	 * @param fields FieldCollection that this row holds data for.
-	 * @throws OpeneERPApiException
+	 * @throws OdooApiException
 	 */
-	public Row (HashMap<String, Object> openERPResult, FieldCollection fields) throws OpeneERPApiException{
-		this.openERPResult = openERPResult;
+	public Row (HashMap<String, Object> odooResult, FieldCollection fields) throws OdooApiException{
+		this.odooResult = odooResult;
 		this.fields = fields;
 		
 		// This is a new row, add entries for every field
-		if (openERPResult.isEmpty()){
+		if (odooResult.isEmpty()){
 			this.put("id", 0);
 			for (int i = 0; i < fields.size(); i++)
 				this.put(fields.get(i).getName(),null);
@@ -81,7 +78,7 @@ public class Row {
 	 */
 	@SuppressWarnings("unchecked")
 	public Row (Row templateRow) {
-		this.openERPResult = (HashMap<String, Object>) templateRow.openERPResult.clone();
+		this.odooResult = (HashMap<String, Object>) templateRow.odooResult.clone();
 		this.fields = (FieldCollection) templateRow.fields.clone();
 	}
 
@@ -113,13 +110,13 @@ public class Row {
 
 		// ID is a special case.  It is always returned in a query
 		if (fieldName != null && fieldName.equals("id"))
-			return openERPResult.get(fieldName);
+			return odooResult.get(fieldName);
 		
 		Field fieldMeta = getField(fieldName);
 		if (fieldMeta == null)
 			return null;
 
-		Object value = openERPResult.get(fieldName);
+		Object value = odooResult.get(fieldName);
 		Field.FieldType fieldType = fieldMeta.getType();
 
 		if (fieldType != Field.FieldType.BOOLEAN && value instanceof Boolean)
@@ -162,17 +159,17 @@ public class Row {
 	 * Updates row field values
 	 * @param fieldName Name of the field to update
 	 * @param value New value that must be associated with the field
-	 * @throws OpeneERPApiException
+	 * @throws OdooApiException
 	 */
-	public void put(String fieldName, Object value) throws OpeneERPApiException {
+	public void put(String fieldName, Object value) throws OdooApiException {
 		if (fieldName.equals("id")){
-			openERPResult.put(fieldName, value);
+			odooResult.put(fieldName, value);
 			return;
 		}
 		
 		Field fld = getField(fieldName);
 		if (fld == null)
-			throw new OpeneERPApiException("Field '" + fieldName + "' was not found in row");
+			throw new OdooApiException("Field '" + fieldName + "' was not found in row");
 		
 		Field.FieldType fieldType = fld.getType();
 		
@@ -180,19 +177,19 @@ public class Row {
 			value = new Object[]{value,null}; 
 		
 		// See if the value actually changed
-		if (openERPResult.containsKey(fieldName)){
-			Object oldValue = openERPResult.get(fieldName);
+		if (odooResult.containsKey(fieldName)){
+			Object oldValue = odooResult.get(fieldName);
 			if (oldValue == null && value == null)
 					return;
 			
 			if ((oldValue == null && value != null)
 				|| (oldValue != null && value == null)
 				|| !oldValue.equals(value))
-				openERPResult.remove(fieldName);
+				odooResult.remove(fieldName);
 			else return;
 		}
 		
-		openERPResult.put(fieldName, value);
+		odooResult.put(fieldName, value);
 		
 		getChangedFields().add(fld);
 		
@@ -206,12 +203,12 @@ public class Row {
 	 * @param fieldName Name of the many to many field to update
 	 * @param values Object [] of ids to update the many2many field with
 	 * @param append If the values should be added to the existing values.  If not, the value is replaced.
-	 * @throws OpeneERPApiException
+	 * @throws OdooApiException
 	 */
-	public void putMany2ManyValue(String fieldName, Object [] values, boolean append) throws OpeneERPApiException{
+	public void putMany2ManyValue(String fieldName, Object [] values, boolean append) throws OdooApiException{
 		Field fld = getField(fieldName);
 		if (fld.getType() != FieldType.MANY2MANY)
-			throw new OpeneERPApiException("Field '" + fieldName + "' is not a many2many field");
+			throw new OdooApiException("Field '" + fieldName + "' is not a many2many field");
 		
 		Object currentValue = get(fieldName);
 		

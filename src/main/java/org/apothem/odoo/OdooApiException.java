@@ -16,36 +16,28 @@
 
 package org.apothem.odoo;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
-/***
- * Row collection for Odoo row data
+/**
+ * Exception class for Odoo API errors
  * @author Pieter van der Merwe
  *
  */
-public class RowCollection extends ArrayList<Row> {
+public class OdooApiException extends Exception {
 
-	private static final long serialVersionUID = -168965138153400087L;
-	
-	public RowCollection(){
+	private static final long serialVersionUID = 3148147969903379455L;
+
+	public OdooApiException(String message) {
+		super(message);
+		// TODO Auto-generated constructor stub
 	}
 
-	@SuppressWarnings("unchecked")
-	public RowCollection(Object [] odooResultSet, FieldCollection fields) throws OdooApiException{
-		for (int i = 0; i < odooResultSet.length; i++){
-			Row row = new Row((HashMap<String, Object>) odooResultSet[i], fields);
-			this.add(row);
-		}
+	public OdooApiException(Throwable cause) {
+		super(cause);
+		// TODO Auto-generated constructor stub
 	}
 
-	@Override
-	public void add(int index, Row element) {
-		super.add(index, element);
+	public OdooApiException(String message, Throwable cause) {
+		super(message, cause);
+		// TODO Auto-generated constructor stub
 	}
 
-	@Override
-	public boolean add(Row e) {
-		return super.add(e);
-	}
 }

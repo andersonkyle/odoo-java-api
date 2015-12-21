@@ -1,26 +1,23 @@
 /*
- *   Copyright 2013-2014 De Bortoli Wines Pty Limited (Australia)
+ * Copyright 2015 Apothem.
  *
- *   This file is part of OpenERPJavaAPI.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- *   Licensed under the Apache License, Version 2.0 (the "License");
- *   you may not use this file except in compliance with the License.
- *   You may obtain a copy of the License at
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
- *       http://www.apache.org/licenses/LICENSE-2.0
- *
- *   Unless required by applicable law or agreed to in writing, software
- *   distributed under the License is distributed on an "AS IS" BASIS,
- *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *   See the License for the specific language governing permissions and
- *   limitations under the License. 
- *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package org.apothem.odoo;
 
 /**
- * Breaks up the OpenERP server version into a major, minor and build number
+ * Breaks up the Odoo server version into a major, minor and build number
  * @author Pieter van der Merwe
  * @since  May 30, 2013
  */
@@ -68,7 +65,7 @@ public class Version {
   }
 
   /**
-   * Get the major version of the OpenERP version string
+   * Get the major version of the Odoo version string
    * @return Major version number
    */
   public int getMajor() {
@@ -76,7 +73,7 @@ public class Version {
   }
 
   /**
-   * Get the minor version of the OpenERP version string
+   * Get the minor version of the Odoo version string
    * @return Minor version number
    */
   public int getMinor() {
@@ -84,7 +81,7 @@ public class Version {
   }
 
   /**
-   * Get the build number of the OpenERP version string
+   * Get the build number of the Odoo version string
    * @return Build number
    */
   public String getBuild() {

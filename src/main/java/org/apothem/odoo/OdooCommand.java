@@ -1,20 +1,17 @@
 /*
- *   Copyright 2011, 2013-2014 De Bortoli Wines Pty Limited (Australia)
+ * Copyright 2015 Apothem.
  *
- *   This file is part of OpenERPJavaAPI.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- *   Licensed under the Apache License, Version 2.0 (the "License");
- *   you may not use this file except in compliance with the License.
- *   You may obtain a copy of the License at
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
- *       http://www.apache.org/licenses/LICENSE-2.0
- *
- *   Unless required by applicable law or agreed to in writing, software
- *   distributed under the License is distributed on an "AS IS" BASIS,
- *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *   See the License for the specific language governing permissions and
- *   limitations under the License. 
- *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package org.apothem.odoo;
@@ -23,19 +20,19 @@ import java.util.HashMap;
 import org.apache.xmlrpc.XmlRpcException;
 
 /**
- * Wrapper class for OpenERP commands.  It uses the session object to make the call, but builds the parameters in this class
+ * Wrapper class for Odoo commands.  It uses the session object to make the call, but builds the parameters in this class
  * @author Pieter van der Merwe
  *
  */
-public class OpenERPCommand {
+public class OdooCommand {
 	
 	private final Session session;
 	
 	/**
 	 * Main constructor
-	 * @param session Session object that will be used to make the calls to OpenERP.
+	 * @param session Session object that will be used to make the calls to Odoo.
 	 */
-	public OpenERPCommand(Session session){
+	public OdooCommand(Session session){
 		this.session = session;
 	}
 	
@@ -67,7 +64,7 @@ public class OpenERPCommand {
 	}
 
 	/**
-	 * Fetches field information for an object n OpenERP
+	 * Fetches field information for an object n Odoo
 	 * @param objectName Object or model name to fetch field information for
 	 * @param filterFields Only return data for files in the filter list
 	 * @return A HashMap of field-value pairs.
@@ -79,11 +76,11 @@ public class OpenERPCommand {
 	}
 
 	/**
-	 * Reads object data from the OpenERP server
+	 * Reads object data from the Odoo server
 	 * @param objectName Name of the object to return data for
 	 * @param ids List of id to fetch data for.  Call searchObject to get a potential list
 	 * @param fields List of fields to return data for
-	 * @returnA collection of rows for an OpenERP object
+	 * @returnA collection of rows for an Odoo object
 	 * @throws XmlRpcException
 	 */
 	public Object[] readObject(String objectName, Object [] ids, String [] fields) throws XmlRpcException {
@@ -110,7 +107,7 @@ public class OpenERPCommand {
 	 * @param fieldList List of fields to update.  The import function has some specific naming conventions.  Consider using the ObjectAdapter
 	 * @param rows Rows to import.  Fields must be in the same order as the 'fieldList' parameter
 	 * @return The result returned from the server.  Either returns the number of successfully imported rows or returns the error.
-	 * @throws OpeneERPApiException
+	 * @throws OdooApiException
 	 * @throws XmlRpcException
 	 */
 	
@@ -125,7 +122,7 @@ public class OpenERPCommand {
   }
   
 	/**
-	 * Returns the name_get result of an object in the OpenERP server.
+	 * Returns the name_get result of an object in the Odoo server.
 	 * @param objectName Object name to invoke the name_get on
 	 * @param ids Database IDs to invoke the name_get for
 	 * @return An Object[] with an entry for each ID.  Each entry is another Object [] with index 0 being the ID and index 1 being the Name
@@ -136,7 +133,7 @@ public class OpenERPCommand {
 	}
 	
 	/**
-	 * Deletes objects from the OpenERP Server
+	 * Deletes objects from the Odoo Server
 	 * @param objectName Object name to delete rows from
 	 * @param ids List of ids to delete data from
 	 * @return If the command was successful
@@ -159,7 +156,7 @@ public class OpenERPCommand {
 	
 	/**
 	 * Calls any function on an object.  
-	 * The function OpenERP must have the signature like (self, cr, uid, *param) and return a dictionary or object.
+	 * The function Odoo must have the signature like (self, cr, uid, *param) and return a dictionary or object.
 	 * *param can be replaced by separate parameters if you are sure of the number of parameters expected
 	 * @param objectName Object name where the function exists
 	 * @param functionName function to call
@@ -190,7 +187,7 @@ public class OpenERPCommand {
 	public void nameSearch() throws XmlRpcException{
 		Object result = null;
 		
-		OpenERPClient objectClient = new OpenERPClient(host, port, RPCServices.RPC_OBJECT);
+		OdooClient objectClient = new OdooClient(host, port, RPCServices.RPC_OBJECT);
 		HashMap<Object, String> values = new HashMap<Object, String> ();
 		values.put("user_email", "test@gmail.com");
 		
@@ -205,7 +202,7 @@ public class OpenERPCommand {
 	
 	public Object getDefaults() throws XmlRpcException{
 		Object result = null;
-		OpenERPClient objectClient = new OpenERPClient(host, port, RPCServices.RPC_OBJECT);
+		OdooClient objectClient = new OdooClient(host, port, RPCServices.RPC_OBJECT);
 		Object[] params = new Object[] {databaseName, userID, password, "res.users", "default_get", new Object[]{"active"}};
 		result = objectClient.execute("execute", params);
 		return result;	}

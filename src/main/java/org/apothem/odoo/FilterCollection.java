@@ -1,20 +1,17 @@
 /*
- *   Copyright 2011, 2014 De Bortoli Wines Pty Limited (Australia)
+ * Copyright 2015 Apothem.
  *
- *   This file is part of OpenERPJavaAPI.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- *   Licensed under the Apache License, Version 2.0 (the "License");
- *   you may not use this file except in compliance with the License.
- *   You may obtain a copy of the License at
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
- *       http://www.apache.org/licenses/LICENSE-2.0
- *
- *   Unless required by applicable law or agreed to in writing, software
- *   distributed under the License is distributed on an "AS IS" BASIS,
- *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *   See the License for the specific language governing permissions and
- *   limitations under the License. 
- *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package org.apothem.odoo;
@@ -59,14 +56,14 @@ public class FilterCollection {
 	 * @param fieldName Name of the model that should be filtered on
 	 * @param comparison For example =, !=, >, >=, <, <=, like, ilike, in, not in, child_of, parent_left, parent_right
 	 * @param value value that will be compared to 'fieldName' using the 'comparison'
-	 * @throws OpeneERPApiException 
+	 * @throws OdooApiException 
 	 */
-	public void add(int index, String fieldName, String comparison, Object value) throws OpeneERPApiException{
+	public void add(int index, String fieldName, String comparison, Object value) throws OdooApiException{
 		if (fieldName == null)
-			throw new OpeneERPApiException("First filter parameter is mandatory.  Please read the OpenERP help.");
+			throw new OdooApiException("First filter parameter is mandatory.  Please read the Odoo help.");
 		
 		if (comparison == null)
-			throw new OpeneERPApiException("Second filter parameter is mandatory.  Please read the OpenERP help.");
+			throw new OdooApiException("Second filter parameter is mandatory.  Please read the Odoo help.");
 		
 		Object [] filter = new Object[] {fieldName,comparison,value};
 		filters.add(index, filter);
@@ -77,16 +74,16 @@ public class FilterCollection {
 	 * @param fieldName Name of the model that should be filtered on
 	 * @param comparison For example =, !=, >, >=, <, <=, like, ilike, in, not in, child_of, parent_left, parent_right
 	 * @param value value that will be compared to 'fieldName' using the 'comparison'
-	 * @throws OpeneERPApiException 
+	 * @throws OdooApiException 
 	 */
-	public void add(String fieldName, String comparison, Object value) throws OpeneERPApiException{
+	public void add(String fieldName, String comparison, Object value) throws OdooApiException{
 		add(filters.size(), fieldName, comparison, value);
 	}
 	
 	/**
 	 * Adds logical operators for filters
 	 *
-	 * From the OpenERP code:
+	 * From the Odoo code:
 	 *  Domain criteria can be combined using 3 logical operators than can be added between tuples:  '**&**' (logical AND, default), '**|**' (logical OR), '**!**' (logical NOT).
      *  These are **prefix** operators and the arity of the '**&**' and '**|**' operator is 2, while the arity of the '**!**' is just 1.
      *  Be very careful about this when you combine them the first time.
@@ -107,7 +104,7 @@ public class FilterCollection {
 	/**
 	 * Adds logical operators for filters
 	 *
-	 * From the OpenERP code:
+	 * From the Odoo code:
 	 *  Domain criteria can be combined using 3 logical operators than can be added between tuples:  '**&**' (logical AND, default), '**|**' (logical OR), '**!**' (logical NOT).
      *  These are **prefix** operators and the arity of the '**&**' and '**|**' operator is 2, while the arity of the '**!**' is just 1.
      *  Be very careful about this when you combine them the first time.
@@ -143,7 +140,7 @@ public class FilterCollection {
 	}
 	
 	/**
-	 * Gets the filters in a Object[] required by the XMLRPC calls to OpenERP
+	 * Gets the filters in a Object[] required by the XMLRPC calls to Odoo
 	 * @return
 	 */
 	public Object[] getFilters(){
