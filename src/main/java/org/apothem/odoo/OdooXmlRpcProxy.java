@@ -172,4 +172,24 @@ public class OdooXmlRpcProxy extends XmlRpcClient {
     
     return new Version(client.execute("server_version", new Object[] {}).toString());
   }
+  
+  public static boolean createDatabase(RPCProtocol protocol, String host, int port, String database, String masterPassword, String password) throws XmlRpcException{
+	  OdooXmlRpcProxy client = new OdooXmlRpcProxy(protocol, host, port, RPCServices.RPC_DATABASE);
+	  return (Boolean) client.execute("create_database", new Object[]{masterPassword, database, false, "en_US", password});
+  }
+  
+  public static boolean createDatabase(String host, int port, String database, String masterPassword, String password) throws XmlRpcException{
+	  OdooXmlRpcProxy client = new OdooXmlRpcProxy(RPCProtocol.RPC_HTTP, host, port, RPCServices.RPC_DATABASE);
+	  return (Boolean) client.execute("create_database", new Object[]{masterPassword, database, false, "en_US", password});
+  }
+  
+  public static boolean dropDatabase(RPCProtocol protocol, String host, int port, String database, String masterPassword) throws XmlRpcException{
+	  OdooXmlRpcProxy client = new OdooXmlRpcProxy(protocol, host, port, RPCServices.RPC_DATABASE);
+	  return (Boolean) client.execute("drop_database", new Object[]{masterPassword, database});
+  }
+  
+  public static boolean dropDatabase(String host, int port, String database, String masterPassword) throws XmlRpcException{
+	  OdooXmlRpcProxy client = new OdooXmlRpcProxy(RPCProtocol.RPC_HTTP, host, port, RPCServices.RPC_DATABASE);
+	  return (Boolean) client.execute("drop", new Object[]{masterPassword, database});
+  }
 }
