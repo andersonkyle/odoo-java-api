@@ -21,8 +21,10 @@ package com.debortoliwines.openerp.api;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.xmlrpc.XmlRpcException;
@@ -835,23 +837,45 @@ public class ObjectAdapter {
 	}
 	
 	/**
-	 * Call to install a module
-	 * @param functionName
-	 * @param parameters
+	 * Install a module
+	 * @param moduleName
 	 * @return
 	 * @throws XmlRpcException
-	 * @throws OpeneERPApiException
+	 * @throws OdooApiException
 	 */
-	public boolean installModule(String functionName, Object[] parameters) throws XmlRpcException, OpeneERPApiException{
+	public boolean installModule(String moduleName) throws XmlRpcException,
+	OpeneERPApiException {
+
 		boolean isModuleInstalled = false;
-		
-		Map<String, Object> results = (HashMap<String, Object>) commands.callModuleObjectFunction(objectName, functionName, parameters);
-		
-		if(results!=null && !results.isEmpty()){
+
+		FilterCollection fCollection = new FilterCollection();
+
+		fCollection.add("name", "=", moduleName);
+		fCollection.add("state", "=", "uninstalled");
+
+		RowCollection search_read_collection = searchAndReadObject(fCollection,
+				new String[] { "id", "name" });
+
+		List<Map<String, Object>> resultList = new ArrayList<Map<String, Object>>();
+		Map<String, Object> results = null;
+
+		for (Row row : search_read_collection) {
+
+			results = (HashMap<String, Object>) commands
+					.callModuleObjectFunction(objectName,
+							"button_immediate_install",
+							new Object[] { Arrays.asList(row.getID()) });
+
+			resultList.add(results);
+		}
+
+		if (!resultList.isEmpty()) {
 			isModuleInstalled = true;
 		}
+
 		return isModuleInstalled;
-	}
+
+	}  
 	
   /**
    * Executes a workflow by sending a signal to the workflow engine for a specific object.
