@@ -185,7 +185,7 @@ public class OdooXmlRpcProxy extends XmlRpcClient {
   
   public static boolean dropDatabase(RPCProtocol protocol, String host, int port, String database, String masterPassword) throws XmlRpcException{
 	  OdooXmlRpcProxy client = new OdooXmlRpcProxy(protocol, host, port, RPCServices.RPC_DATABASE);
-	  return (Boolean) client.execute("drop_database", new Object[]{masterPassword, database});
+	  return (Boolean) client.execute("drop", new Object[]{masterPassword, database});
   }
   
   public static boolean dropDatabase(String host, int port, String database, String masterPassword) throws XmlRpcException{
