@@ -180,6 +180,11 @@ public class OdooCommand {
   public void executeWorkflow(final String objectName, final String signal, final int objectID) throws XmlRpcException {
     session.executeWorkflow(objectName, signal, objectID);   
   }
+  
+  @SuppressWarnings("unchecked")
+  public HashMap<String, Object> callModuleFunction(String objectName, String functionName, Object[] parameters) throws XmlRpcException {
+	  return (HashMap<String, Object>) session.executeCommand(objectName, functionName, parameters);
+  }
 	
 	/***
 	 * Left here for later use if required

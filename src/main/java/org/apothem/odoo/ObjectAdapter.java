@@ -18,9 +18,9 @@ package org.apothem.odoo;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
-
 import org.apache.xmlrpc.XmlRpcException;
 import org.apothem.odoo.Field.FieldType;
 import org.apothem.odoo.FilterCollection.FilterOperator;
@@ -868,5 +868,24 @@ public class ObjectAdapter {
     RowCollection rows = new RowCollection();
     rows.add(row);
     return this.unlinkObject(rows);
+  }
+  
+  public boolean installModule(String moduleName) throws XmlRpcException, OdooApiException{
+	  boolean isSuccessful = false;
+	  FilterCollection filter = new FilterCollection();
+	  filter.add("name", "=", moduleName);
+	  filter.add("state", "=", "uninstalled");
+	  RowCollection rowCollection = searchAndReadObject(filter, new String[]{"id", "name"});
+	  if (!rowCollection.isEmpty()) {
+		commands.callModuleFunction(objectName, "button_immediate_install", new Object[]{Arrays.asList(rowCollection.get(0).getID())});
+		FilterCollection idFilter = new FilterCollection();
+		idFilter.add("id", "=", rowCollection.get(0).getID());
+		RowCollection result = searchAndReadObject(idFilter, new String[]{"state"});
+		if(!result.isEmpty() && result.get(0).get("state").equals("installed")){
+			isSuccessful = true;
+		}
+	}
+	return isSuccessful;
+	  
   }
 }
